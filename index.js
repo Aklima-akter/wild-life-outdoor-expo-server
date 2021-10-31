@@ -75,6 +75,20 @@ async function run() {
       res.send(result)
     })
 
+    //Update API
+    app.put('/allOrder/:id', async (req, res) => {
+      const id = req.params.id
+      const query = { _id: ObjectId(id) }
+      const options = { upsert: true }
+      const updateDoc = {
+        $set: {
+          status: 'Approved',
+        },
+      }
+      const result = await orderCollection.updateOne(filter, updateDoc, options)
+      res.json(result)
+    })
+
     //DELETE API
     app.delete('/allOrder/:id', async (req, res) => {
       const id = req.params.id
